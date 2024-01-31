@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class New extends StatefulWidget {
   New({super.key});
@@ -17,19 +18,42 @@ class _New extends State<New> {
       end: Alignment.bottomCenter),
       ),
       child: Scaffold(backgroundColor: Colors.transparent,
-      appBar: PreferredSize(preferredSize: Size.fromHeight(20), child: AppBar(
+      appBar: PreferredSize(preferredSize: Size.fromHeight(30), child: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: const Icon(Icons.grid_view_rounded,color: Colors.white,),
         actions: [
-          Container(
-            margin: EdgeInsets.only(right: 20),
-            child: CircleAvatar(
-              backgroundImage: ,
+          Icon(Icons.account_circle_outlined,color: Colors.white,
+          size: 24,
+          ),
+          SizedBox(width: 18,)
+        ],
+      ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        type: BottomNavigationBarType.fixed,
+      unselectedItemColor: Colors.white,
+      selectedItemColor: Colors.white,
+      items: const [BottomNavigationBarItem(
+        icon:Icon(Icons.home_outlined), label: 'Home' ),
+      BottomNavigationBarItem(icon:Icon(Icons.star_border), label: 'Favourite' ),
+      BottomNavigationBarItem(icon:Icon(Icons.play_circle), label: 'Play' ),
+      BottomNavigationBarItem(icon:Icon(Icons.people_alt_outlined), label: 'Profile' ),],backgroundColor:  Color.fromARGB(255, 168, 46, 135)),
+      body: SingleChildScrollView(
+        child: Column(children: [
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+              children:[ Text('Welcome',style: GoogleFonts.ubuntu(color: Colors.white,fontWeight: FontWeight.bold,
+              fontSize: 24),),
+              SizedBox(height: 5,),
+              Text('Enjoy your favourite music',style: GoogleFonts.ubuntu(color: Colors.white,fontWeight: FontWeight.bold,
+              fontSize: 24),),]
             ),
           )
-        ],
-      )),
-      body: Container(),),
+        ],),
+      ),),
     );
   }}
