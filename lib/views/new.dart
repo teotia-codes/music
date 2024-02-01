@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music/models/song_model.dart';
 import 'package:music/widgets/audio_header.dart';
+import 'package:music/widgets/song_card.dart';
 
 class New extends StatefulWidget {
   New({super.key});
@@ -18,7 +19,7 @@ class _New extends State<New> {
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(colors: [
-          Color.fromRGBO(255, 0, 191, 1).withOpacity(0.7),
+          Color.fromRGBO(0, 129, 148, 1).withOpacity(0.7),
           Color.fromARGB(255, 234, 197, 224).withOpacity(0.7),
         ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
       ),
@@ -61,7 +62,7 @@ class _New extends State<New> {
               BottomNavigationBarItem(
                   icon: Icon(Icons.people_alt_outlined), label: 'Profile'),
             ],
-            backgroundColor: Color.fromARGB(255, 168, 46, 135)),
+            backgroundColor: Color.fromRGBO(0, 111, 128, 1)),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -73,8 +74,11 @@ class _New extends State<New> {
                   const SizedBox(height: 20,),
                   SizedBox(
                     height: MediaQuery.of(context).size.height *0.27,
-                    child: ListView.builder(itemBuilder: ((context, index) {
-                      
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: songs.length,
+                      itemBuilder: ((context, index) {
+                      return SongCard(song: songs[index]);
                     })),
                   )
                              ],
@@ -87,6 +91,8 @@ class _New extends State<New> {
     );
   }
 }
+
+
 
 
 class _DiscoverMusic extends StatelessWidget {

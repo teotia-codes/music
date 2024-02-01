@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:music/views/home.dart';
 import 'package:music/views/new.dart';
 
 void main() {
