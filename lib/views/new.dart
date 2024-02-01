@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:music/models/song_model.dart';
+import 'package:music/widgets/audio_header.dart';
 
 class New extends StatefulWidget {
   New({super.key});
@@ -10,6 +12,7 @@ class New extends StatefulWidget {
 }
 
 class _New extends State<New> {
+  List <Song> songs = Song.songs;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -63,6 +66,20 @@ class _New extends State<New> {
           child: Column(
             children: [
               _DiscoverMusic(),
+              Padding(
+                padding: const EdgeInsets.only(left: 20,right: 20,bottom: 20),
+                child: Column(
+                  children: [SectionHeader(title:'Trending Music'),
+                  const SizedBox(height: 20,),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height *0.27,
+                    child: ListView.builder(itemBuilder: ((context, index) {
+                      
+                    })),
+                  )
+                             ],
+                ),
+              )
             ],
           ),
         ),
@@ -70,6 +87,7 @@ class _New extends State<New> {
     );
   }
 }
+
 
 class _DiscoverMusic extends StatelessWidget {
   const _DiscoverMusic({
