@@ -36,25 +36,28 @@ class SongCard extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(width: 50,),
+              const SizedBox(width: 50,),
               Column(
               children: [
                 Text(
                   song.title,
                   style: GoogleFonts.ubuntu(
+                     color: Color.fromRGBO(1, 54, 62, 1),
                       fontWeight: FontWeight.w500, fontSize: 18),
+                    
                 ),
                 Text(
                   song.description,
                   style: GoogleFonts.ubuntu(
                     fontWeight: FontWeight.w500,
-                    fontSize: 16
+                    fontSize: 16,
+                    color: Color.fromRGBO(1, 54, 62, 1)
                   ),
                 ),
               ],
             ),
             const SizedBox(width: 30),
-            Icon(Icons.play_circle,size: 36,color:  Color.fromRGBO(0, 72, 83, 1),)
+          const Icon(Icons.play_circle,size: 36,color:  Color.fromRGBO(0, 72, 83, 1),)
             ],
           ),
         )

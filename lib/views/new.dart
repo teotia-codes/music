@@ -71,7 +71,7 @@ class _New extends State<New> {
                 padding: const EdgeInsets.only(left: 20,right: 20,bottom: 20),
                 child: Column(
                   children: [SectionHeader(title:'Trending Music'),
-                  const SizedBox(height: 20,),
+                  const SizedBox(height: 14,),
                   SizedBox(
                     height: MediaQuery.of(context).size.height *0.27,
                     child: ListView.builder(
