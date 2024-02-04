@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:music/views/new.dart';
+import 'package:music/views/songs.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,7 +13,10 @@ class MyApp extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
+      routes: {
+        '/songs': (context) => SongScreen(),
+      },
       title: 'Music',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(

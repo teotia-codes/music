@@ -15,7 +15,7 @@ static List<Song> songs = [
   description: 'Punjabi',
   url: 'assets/music/aujla.mp3',
   coverUrl: 'assets/images/1.jpeg'),
-  Song(title: 'BPee loon',
+  Song(title: 'Pee loon',
   description: 'Romantic',
   url: 'assets/music/kk.mp3',
   coverUrl: 'assets/images/2.jpeg'),
