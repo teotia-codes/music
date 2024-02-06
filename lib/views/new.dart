@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music/models/playlist_models.dart';
 import 'package:music/models/song_model.dart';
@@ -98,45 +99,57 @@ class _New extends State<New> {
                  const  SectionHeader(title: 'Playlist',width: 180,),
                    const SizedBox(height: 10,),
                     ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
+                     
                         itemCount: playlist.length,
                         itemBuilder: (ctx, index) {
-                          return Container(
-                            padding: EdgeInsets.only(bottom: 3),
-                            child: Row(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.asset(
-                                    playlist[index].imageurl,
-                                    fit: BoxFit.cover,
-                                    height: 80,
-                                    width: 60,
+                          return InkWell(
+  onTap: () {
+    Get.toNamed('/playlist',arguments: playlist);
+  },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12)
+                               ),
+                              padding: EdgeInsets.symmetric(horizontal: 6,vertical: 3),
+                              margin: EdgeInsets.only(bottom: 8),
+                                                    
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.asset(
+                                      playlist[index].imageurl,
+                                      fit: BoxFit.cover,
+                                      height: 80,
+                                      width: 60,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(width: 10,),
-                                Expanded(
-                                  child: Column(mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        playlist[index].title,
-                                        style: GoogleFonts.ubuntu(
-                                            fontSize: 20, color: Colors.white,fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(
-                                        '${playlist[index].songs.length} songs',
-                                        style: GoogleFonts.ubuntu(
-                                            fontSize: 18, color: Colors.white,),
-                                      )
-                                    ],
+                                  SizedBox(width: 10,),
+                                  Expanded(
+                                    child: Column(mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          playlist[index].title,
+                                          style: GoogleFonts.ubuntu(
+                                              fontSize: 20, color: Colors.white,fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          '${playlist[index].songs.length} songs',
+                                          style: GoogleFonts.ubuntu(
+                                              fontSize: 18, color: Colors.white,),
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                IconButton(onPressed: () {}, icon: Icon(Icons.play_circle_fill,
-                                size: 36,
-                                color: Colors.white,))
-                              ],
+                                  IconButton(onPressed: () {}, icon: Icon(Icons.play_circle_fill,
+                                  size: 36,
+                                  color: Colors.white,))
+                                ],
+                              ),
                             ),
                           );
                         })

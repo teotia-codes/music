@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music/views/new.dart';
+import 'package:music/views/playlist.dart';
 import 'package:music/views/songs.dart';
 
 void main() {
@@ -15,8 +16,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       routes: {
-        '/songs': (context) => SongScreen(),
-      },
+  '/songs': (context) => SongScreen(),
+  '/playlist': (context) => PlayListScreen(),
+},
+
       title: 'Music',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
