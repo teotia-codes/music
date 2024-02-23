@@ -71,6 +71,9 @@ flutter:
   - assets/music/aujla.mp3
   - assets/music/kk.mp3
   - assets/music/arijit.mp3
+  - assets/images/auj.jpg
+  - assets/images/kk.jpg
+  - assets/images/arjit.jpg
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
