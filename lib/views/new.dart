@@ -3,8 +3,11 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music/models/playlist_models.dart';
 import 'package:music/models/song_model.dart';
+import 'package:music/views/playlist.dart';
+import 'package:music/views/songs.dart';
 import 'package:music/widgets/audio_header.dart';
 import 'package:music/widgets/song_card.dart';
+import 'package:provider/provider.dart';
 
 class New extends StatefulWidget {
   New({super.key});
@@ -15,8 +18,18 @@ class New extends StatefulWidget {
 }
 
 class _New extends State<New> {
-  List<Song> songs = Song.songs;
-  List<Playlist> playlist = Playlist.playlists;
+  late final dynamic playlistProvider;
+  @override
+  void initState() {
+
+    super.initState();
+ playlistProvider = Provider.of<PlaylistProvider>(context, listen: false);
+  }
+  void goToSong(int songIndex) {
+playlistProvider.currentSongIndex = songIndex;
+
+Navigator.of(context).push(MaterialPageRoute(builder: (context) =>SongScreen()));
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -66,98 +79,103 @@ class _New extends State<New> {
                   icon: Icon(Icons.people_alt_outlined), label: 'Profile'),
             ],
             backgroundColor: Color.fromRGBO(0, 111, 128, 1)),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              _DiscoverMusic(),
-              Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-                child: Column(
-                  children: [
-                    SectionHeader(title: 'Trending Music',width: 100,),
-                    const SizedBox(
-                      height: 14,
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.27,
-                      child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: songs.length,
-                          itemBuilder: ((context, index) {
-                            return SongCard(song: songs[index]);
-                          })),
-                    )
-                  ],
+        body: Consumer<PlaylistProvider>(
+          builder: ( (context, value, child) {
+            final List<Song>playlist = value.playlist;
+            return  SingleChildScrollView(
+            child: Column(
+              children: [
+                _DiscoverMusic(),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                  child: Column(
+                    children: [
+                      SectionHeader(title: 'Trending Music',width: 100,),
+                      const SizedBox(
+                        height: 14,
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.27,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: playlist.length,
+                            itemBuilder: ((context, index) {
+                              final Song song = playlist[index];
+                              return SongCard(song: song,);
+                            })),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-
-                 
-                  children: [
-                 const  SectionHeader(title: 'Playlist',width: 180,),
-                   const SizedBox(height: 10,),
-                    ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                     
-                        itemCount: playlist.length,
-                        itemBuilder: (ctx, index) {
-                          return InkWell(
-  onTap: () {
-    Get.toNamed('/playlist',arguments: playlist);
-  },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12)
-                               ),
-                              padding: EdgeInsets.symmetric(horizontal: 6,vertical: 3),
-                              margin: EdgeInsets.only(bottom: 8),
-                                                    
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Image.asset(
-                                      playlist[index].imageurl,
-                                      fit: BoxFit.cover,
-                                      height: 80,
-                                      width: 60,
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+          
+                   
+                    children: [
+                   const  SectionHeader(title: 'Playlist',width: 180,),
+                     const SizedBox(height: 10,),
+                      ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                       
+                          itemCount: playlist.length,
+                          itemBuilder: (ctx, index) {
+                            return InkWell(
+            onTap:() => Navigator.of(context).push(MaterialPageRoute(builder: (context)=>PlayListScreen(),),),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12)
+                                 ),
+                                padding: EdgeInsets.symmetric(horizontal: 6,vertical: 3),
+                                margin: EdgeInsets.only(bottom: 8),
+                                                      
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.asset(
+                                        playlist[index].coverUrl,
+                                        fit: BoxFit.cover,
+                                        height: 80,
+                                        width: 60,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(width: 10,),
-                                  Expanded(
-                                    child: Column(mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          playlist[index].title,
-                                          style: GoogleFonts.ubuntu(
-                                              fontSize: 20, color: Colors.white,fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          '${playlist[index].songs.length} songs',
-                                          style: GoogleFonts.ubuntu(
-                                              fontSize: 18, color: Colors.white,),
-                                        )
-                                      ],
+                                    SizedBox(width: 10,),
+                                    Expanded(
+                                      child: Column(mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            playlist[index].title,
+                                            style: GoogleFonts.ubuntu(
+                                                fontSize: 20, color: Colors.white,fontWeight: FontWeight.bold),
+                                          ),
+                                          Text(
+                                            '${playlist.length} songs',
+                                            style: GoogleFonts.ubuntu(
+                                                fontSize: 18, color: Colors.white,),
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  IconButton(onPressed: () {}, icon: Icon(Icons.play_circle_fill,
-                                  size: 36,
-                                  color: Colors.white,))
-                                ],
+                                    IconButton(onPressed: () {}, icon: Icon(Icons.play_circle_fill,
+                                    size: 36,
+                                    color: Colors.white,))
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        })
-                  ],
-                ),
-              )
-            ],
-          ),
+                            );
+                          })
+                    ],
+                  ),
+                )
+              ],
+            ),
+          );
+          })
+          
         ),
       ),
     );

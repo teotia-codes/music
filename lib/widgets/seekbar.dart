@@ -27,10 +27,21 @@ class SeekBar extends StatefulWidget {
 
 class _SeekBarState extends State<SeekBar> {
   double? _dragValue;
+  String _formatDuration(Duration? duration){
+    if(duration == null ){
+      return '--:--';
+    }
+    else{
+      String minutes = duration.inMinutes.toString().padLeft(2,'0');
+        String seconds = duration.inSeconds.remainder(60).toString().padLeft(2,'0');
+        return '$minutes:$seconds';
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
+        Text(_formatDuration(widget.position),style: TextStyle(color: Colors.white),),
         Expanded(
           child: SliderTheme(
             data: SliderTheme.of(context).copyWith(
@@ -45,11 +56,12 @@ class _SeekBarState extends State<SeekBar> {
                 thumbColor: Colors.white,
                 overlayColor: Colors.white),
             child: Slider(
-              min: 0,
+              min: 0.0,
               max: widget.duration.inMilliseconds.toDouble(),
                 value: min(
                     _dragValue ?? widget.position.inMilliseconds.toDouble(),
-                    widget.duration.inMilliseconds.toDouble()),
+                    widget.duration.inMilliseconds.toDouble(),
+                    ),
                 onChanged: (value) {
                   setState(() {
                     _dragValue = value;
@@ -59,18 +71,20 @@ class _SeekBarState extends State<SeekBar> {
                   }
                 },
                  onChangeEnd: (value) {
-                  setState(() {
-                    _dragValue = value;
-                  });
                   if (widget.onChangeEnd != null) {
-                    widget.onChangeEnd!(Duration(milliseconds: value.round()));
+                    widget.onChangeEnd!(Duration(milliseconds: value.round(),
+                    )
+                    ,)
+                    ;
                   }
               _dragValue = null;
                 },
                 
                 ),
                 ),
-          ),]
+          ),  Text(_formatDuration(widget.duration),style: TextStyle(color: Colors.white),)
+          ],
+        
         );
       
     

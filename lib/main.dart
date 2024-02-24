@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:music/models/playlist_models.dart';
 import 'package:music/views/new.dart';
 import 'package:music/views/playlist.dart';
 import 'package:music/views/songs.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [ChangeNotifierProvider(create: ((context) => PlaylistProvider()))],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -14,12 +19,8 @@ class MyApp extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      routes: {
-  '/songs': (context) => SongScreen(),
-  '/playlist': (context) => PlayListScreen(),
-},
-
+    return MaterialApp(
+   
       title: 'Music',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(

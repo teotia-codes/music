@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music/models/song_model.dart';
+import 'package:music/views/songs.dart';
 
 class SongCard extends StatelessWidget {
   const SongCard({
     super.key,
     required this.song,
+   
   });
 
   final Song song;
@@ -14,9 +16,9 @@ class SongCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Get.toNamed('/songs',arguments: song);
-      },
+      onTap:(){
+        Navigator.of(context).push(MaterialPageRoute(builder: ((context) => SongScreen())));
+      } ,
       child: Container(
         height: 600,
         margin: EdgeInsets.only(right: 10),
