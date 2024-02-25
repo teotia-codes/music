@@ -36,6 +36,7 @@ class SongScreen extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
+          foregroundColor: Colors.white,
         ),
         extendBodyBehindAppBar: true,
         body: Stack(
@@ -100,21 +101,25 @@ class SongScreen extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-                  StreamBuilder<SeekBarData>(
-                      stream: _seekBarDataStream,
-                      builder: (context, snapshot) {
-                        final positionData = snapshot.data;
-                        return SeekBar(
-                          position: positionData?.position ?? Duration.zero,
-                          duration: positionData?.duration ?? Duration.zero,
-                          onChangeEnd: audioPlayer.seek,
-                        );
-                      }),
+                 SliderTheme(
+                  data: SliderTheme.of(context).copyWith(
+                    thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 11)
+                  ),
+                   child: Slider(value: 50,
+                   min: 0,
+                   max: 100,
+                   activeColor: Color.fromARGB(255, 255, 0, 0),
+                    onChanged: (value){
+                   
+                    }),
+                 ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Expanded(
+                          
                           child: GestureDetector(
+                            
                         onTap: () {},
                         child: Icon(
                           Icons.skip_previous_outlined,
@@ -124,10 +129,11 @@ class SongScreen extends StatelessWidget {
                       )),
                      
                       Expanded(
+                        flex: 0,
                           child: GestureDetector(
                         onTap: () {},
                         child: Icon(Icons.play_arrow,
-                        size: 45,
+                        size: 60,
                           color: Colors.white,),
                       )),
                       

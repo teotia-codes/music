@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:music/models/song_model.dart';
 
+import 'package:music/models/song_model.dart';
+import 'package:audioplayers/audioplayers.dart';
 class PlaylistProvider extends ChangeNotifier {
   final List<Song> _playlist = [
     Song(id: 1,
@@ -25,16 +26,33 @@ class PlaylistProvider extends ChangeNotifier {
   backgroundimg: 'assets/images/arjit.jpg'),
   ];
   int? _currentSongIndex;
+final AudioPlayer _audioPlayer = AudioPlayer();
 
+Duration _currentDuration = Duration.zero;
+Duration _TotalDuration = Duration.zero;
 
+PlaylistProvider(){
+  listenToDuration();
+}
+bool _isPlaying = false;
 
+void play()async {
+final String path = _playlist[_currentSongIndex!].;
+}
+void listenToDuration() {
+_audioPlayer.onDurationChanged.listen((newDuration) {
+  _TotalDuration = newDuration;
+  notifyListeners();
+});
 
+_audioPlayer.onPositionChanged.listen((newPosition) {
+  _currentDuration = newPosition;
+  notifyListeners();
+});
+_audioPlayer.onPlayerComplete.listen((newPosition) { 
 
-
-
-
-
-
+});
+}
   List <Song> get playlist => _playlist;
   int? get currentSongIndex => _currentSongIndex;
  set currentSongIndex(int? newIndex){
