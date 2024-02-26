@@ -15,16 +15,11 @@ import 'package:rxdart/rxdart.dart' as rxdart;
 class SongScreen extends StatelessWidget {
   AudioPlayer audioPlayer = AudioPlayer();
 
-
-
-  Stream<SeekBarData> get _seekBarDataStream =>
-      rxdart.CombineLatestStream.combine2(
-        audioPlayer.positionStream,
-        audioPlayer.durationStream,
-        (Duration position, Duration? duration) {
-          return SeekBarData(position, duration ?? Duration.zero);
-        },
-      );
+String formatTime(Duration duration) {
+  String twoDigitSeconds = duration.inSeconds.remainder(60).toString().padLeft(2,'0');
+  String formattedTime = "${duration.inMinutes}:${twoDigitSeconds}";
+  return formattedTime;
+}
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +93,12 @@ class SongScreen extends StatelessWidget {
                         fontSize: 16,
                         fontWeight: FontWeight.w400),
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                    Text(formatTime(value.currentDuration),style: TextStyle(color: Colors.white,fontSize: 18),),
+                    Text(formatTime(value.totalDuration),style: TextStyle(color: Colors.white,fontSize: 18),),
+                  ],),
                   SizedBox(
                     height: 20,
                   ),
@@ -105,13 +106,17 @@ class SongScreen extends StatelessWidget {
                   data: SliderTheme.of(context).copyWith(
                     thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 11)
                   ),
-                   child: Slider(value: 50,
-                   min: 0,
-                   max: 100,
-                   activeColor: Color.fromARGB(255, 255, 0, 0),
-                    onChanged: (value){
+                   child: Slider(  min: 0,
+                     max: value.totalDuration.inSeconds.toDouble(),
+                    value:value.currentDuration.inSeconds.toDouble(),
                    
-                    }),
+                   activeColor: Color.fromARGB(255, 255, 0, 0),
+                    onChanged: (double double){
+                   
+                    },
+                    onChangeEnd: (double double ){
+                   value.seek(Duration(seconds: double.toInt()));
+                    },),
                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -120,7 +125,8 @@ class SongScreen extends StatelessWidget {
                           
                           child: GestureDetector(
                             
-                        onTap: () {},
+                        onTap:  value.playPreviousSong,
+                      
                         child: Icon(
                           Icons.skip_previous_outlined,
                           size: 45,
@@ -131,15 +137,17 @@ class SongScreen extends StatelessWidget {
                       Expanded(
                         flex: 0,
                           child: GestureDetector(
-                        onTap: () {},
-                        child: Icon(Icons.play_arrow,
+                        onTap:  value.pauseOrResume,
+                       
+                        child: Icon(value.isPlaying?Icons.pause_circle:Icons.play_arrow,
                         size: 60,
                           color: Colors.white,),
                       )),
                       
                       Expanded(
                           child: GestureDetector(
-                        onTap: () {},
+                        onTap: value.playNextSong,
+                       
                         child: Icon(Icons.skip_next_outlined,
                         size: 45,
                           color: Colors.white,),
